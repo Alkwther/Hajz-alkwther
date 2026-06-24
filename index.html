@@ -720,7 +720,6 @@ async function sendWhatsApp() {
       btn.textContent = '✅ تم إرسال طلبك بنجاح!';
       btn.style.background = 'linear-gradient(135deg, #38a169, #276749)';
       setTimeout(() => {
-        // Reset form
         grades.forEach(g => { document.getElementById(g.id).textContent = '0'; });
         updateTotal();
         goPage(1);
@@ -732,9 +731,10 @@ async function sendWhatsApp() {
       throw new Error('failed');
     }
   } catch(e) {
-    btn.textContent = '❌ حدث خطأ، حاول مرة أخرى';
+    // Fallback: open Telegram directly
+    window.open(`https://t.me/alkwther_orders_bot?text=${encodeURIComponent(msg)}`, '_blank');
+    btn.textContent = '📨 إرسال الطلب';
     btn.disabled = false;
-    setTimeout(() => { btn.textContent = '📨 إرسال الطلب'; }, 3000);
   }
 }
 </script>
