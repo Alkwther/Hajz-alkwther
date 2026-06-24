@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مطبعة الكوثر — حجز الكتب المدرسية</title>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '998049536318463');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=998049536318463&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: white;
+    text-align: center;
+    padding: 28px 20px 24px;
+  }
+  .header-logo {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #e2b96f;
+    letter-spacing: 1px;
+  }
+  .header-sub {
+    font-size: 0.9rem;
+    color: #a0aec0;
+    margin-top: 4px;
+  }
+  .header-badge {
+    display: inline-block;
+    margin-top: 10px;
+    background: rgba(226,185,111,0.15);
+    border: 1px solid rgba(226,185,111,0.4);
+    color: #e2b96f;
+    font-size: 0.8rem;
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+
+  /* STEPS */
+  .steps {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: #16213e;
+    padding: 0;
+    overflow: hidden;
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    font-size: 0.78rem;
+    color: #6b7db3;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+    max-width: 120px;
+  }
+  .step.active {
+    color: #e2b96f;
+    border-bottom-color: #e2b96f;
+  }
+  .step.done {
+    color: #68d391;
+    border-bottom-color: #68d391;
+  }
+  .step-num {
+    display: block;
+    font-size: 1rem;
+    font-weight: 900;
+    margin-bottom: 2px;
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title span { font-size: 1.3rem; }
+
+  /* GRADE GROUP */
+  .grade-group {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .grade-group-header {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    color: white;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .grade-group-header .price-tag {
+    background: rgba(226,185,111,0.2);
+    color: #e2b96f;
+    font-size: 0.78rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(226,185,111,0.3);
+  }
+
+  /* GRADE ROW */
+  .grade-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
+  }
+  .grade-row:last-child { border-bottom: none; }
+  .grade-name {
+    flex: 1;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #2d3748;
+  }
+  .qty-control {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .qty-btn {
+    background: #f7fafc;
+    border: none;
+    width: 34px;
+    height: 34px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f3460;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    touch-action: manipulation;
+  }
+  .qty-btn:active { background: #e2e8f0; }
+  .qty-btn.plus { background: #0f3460; color: white; }
+  .qty-btn.plus:active { background: #0a2540; }
+  .qty-num {
+    width: 36px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    background: white;
+    border: none;
+    border-right: 1.5px solid #e2e8f0;
+    border-left: 1.5px solid #e2e8f0;
+    height: 34px;
+    line-height: 34px;
+  }
+
+  /* TOTAL BAR */
+  .total-bar {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    border-top: 2px solid #e2b96f;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    z-index: 10;
+  }
+  .total-label { font-size: 0.85rem; color: #718096; font-weight: 600; }
+  .total-amount { font-size: 1.3rem; font-weight: 900; color: #0f3460; }
+  .total-currency { font-size: 0.75rem; color: #718096; font-weight: 400; }
+
+  /* BUTTONS */
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #0f3460, #1a1a2e);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(15,52,96,0.3);
+  }
+  .btn-primary:active { transform: scale(0.98); }
+
+  .btn-secondary {
+    width: 100%;
+    padding: 13px;
+    background: white;
+    color: #0f3460;
+    border: 2px solid #0f3460;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+  }
+  .btn-secondary:active { background: #f0f5ff; }
+
+  .btn-whatsapp {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+    transition: transform 0.1s;
+  }
+  .btn-whatsapp:active { transform: scale(0.98); }
+
+  /* PAGE SECTIONS */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* FORM */
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #4a5568;
+    margin-bottom: 6px;
+  }
+  .form-label .req { color: #e53e3e; }
+  .form-input, .form-select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    color: #2d3748;
+    background: white;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: #0f3460;
+    box-shadow: 0 0 0 3px rgba(15,52,96,0.1);
+  }
+  .form-input.error, .form-select.error {
+    border-color: #e53e3e;
+  }
+  .form-error {
+    font-size: 0.78rem;
+    color: #e53e3e;
+    margin-top: 4px;
+    display: none;
+  }
+  .form-error.show { display: block; }
+
+  /* REVIEW */
+  .review-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .review-card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f3460;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .review-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.88rem;
+    border-bottom: 1px solid #f7fafc;
+  }
+  .review-row:last-child { border-bottom: none; }
+  .review-row-label { color: #718096; }
+  .review-row-value { font-weight: 700; color: #2d3748; text-align: left; }
+  .review-total {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    color: white;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+  }
+  .review-total-label { font-size: 0.9rem; color: #a0aec0; }
+  .review-total-amount { font-size: 1.4rem; font-weight: 900; color: #e2b96f; }
+
+  .info-box {
+    background: #ebf8ff;
+    border: 1px solid #bee3f8;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    color: #2c5282;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  .alert-error {
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    color: #c53030;
+    margin-bottom: 14px;
+    display: none;
+  }
+  .alert-error.show { display: block; }
+
+  /* SUMMARY CHIPS */
+  .chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .chip {
+    background: #ebf8ff;
+    color: #2c5282;
+    border: 1px solid #bee3f8;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">📚 مطبعة الكوثر</div>
+  <div class="header-sub">الكتب المدرسية العراقية</div>
+  <div class="header-badge">🚚 توصيل مجاني لجميع المحافظات</div>
+</div>
+
+<div class="steps">
+  <div class="step active" id="step1"><span class="step-num">١</span>الصفوف</div>
+  <div class="step" id="step2"><span class="step-num">٢</span>التوصيل</div>
+  <div class="step" id="step3"><span class="step-num">٣</span>المراجعة</div>
+</div>
+
+<!-- PAGE 1: GRADES -->
+<div class="page active" id="page1">
+  <div class="container">
+    <div class="section-title"><span>📖</span> اختر الصفوف والكميات</div>
+
+    <div class="grade-group">
+      <div class="grade-group-header">
+        🏫 المرحلة الابتدائية
+        <span class="price-tag">٢٠,٠٠٠ د.ع / بكج</span>
+      </div>
+      <div class="grade-row"><span class="grade-name">الأول الابتدائي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g1',-1)">−</button><span class="qty-num" id="g1">0</span><button class="qty-btn plus" onclick="changeQty('g1',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الثاني الابتدائي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g2',-1)">−</button><span class="qty-num" id="g2">0</span><button class="qty-btn plus" onclick="changeQty('g2',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الثالث الابتدائي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g3',-1)">−</button><span class="qty-num" id="g3">0</span><button class="qty-btn plus" onclick="changeQty('g3',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الرابع الابتدائي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g4',-1)">−</button><span class="qty-num" id="g4">0</span><button class="qty-btn plus" onclick="changeQty('g4',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الخامس الابتدائي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g5',-1)">−</button><span class="qty-num" id="g5">0</span><button class="qty-btn plus" onclick="changeQty('g5',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">السادس الابتدائي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g6',-1)">−</button><span class="qty-num" id="g6">0</span><button class="qty-btn plus" onclick="changeQty('g6',1)">+</button></div></div>
+    </div>
+
+    <div class="grade-group">
+      <div class="grade-group-header">
+        🏛️ المرحلة المتوسطة
+        <span class="price-tag">٢٤,٠٠٠ د.ع / بكج</span>
+      </div>
+      <div class="grade-row"><span class="grade-name">الأول المتوسط</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g7',-1)">−</button><span class="qty-num" id="g7">0</span><button class="qty-btn plus" onclick="changeQty('g7',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الثاني المتوسط</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g8',-1)">−</button><span class="qty-num" id="g8">0</span><button class="qty-btn plus" onclick="changeQty('g8',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الثالث المتوسط</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g9',-1)">−</button><span class="qty-num" id="g9">0</span><button class="qty-btn plus" onclick="changeQty('g9',1)">+</button></div></div>
+    </div>
+
+    <div class="grade-group">
+      <div class="grade-group-header">
+        🎓 المرحلة الإعدادية
+        <span class="price-tag">٢٨,٠٠٠ د.ع / بكج</span>
+      </div>
+      <div class="grade-row"><span class="grade-name">الرابع الأدبي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g10',-1)">−</button><span class="qty-num" id="g10">0</span><button class="qty-btn plus" onclick="changeQty('g10',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الرابع العلمي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g11',-1)">−</button><span class="qty-num" id="g11">0</span><button class="qty-btn plus" onclick="changeQty('g11',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الخامس الأدبي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g12',-1)">−</button><span class="qty-num" id="g12">0</span><button class="qty-btn plus" onclick="changeQty('g12',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">الخامس العلمي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g13',-1)">−</button><span class="qty-num" id="g13">0</span><button class="qty-btn plus" onclick="changeQty('g13',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">السادس الأدبي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g14',-1)">−</button><span class="qty-num" id="g14">0</span><button class="qty-btn plus" onclick="changeQty('g14',1)">+</button></div></div>
+      <div class="grade-row"><span class="grade-name">السادس العلمي</span><div class="qty-control"><button class="qty-btn minus" onclick="changeQty('g15',-1)">−</button><span class="qty-num" id="g15">0</span><button class="qty-btn plus" onclick="changeQty('g15',1)">+</button></div></div>
+    </div>
+
+    <div id="alert1" class="alert-error">⚠️ يرجى اختيار صف واحد على الأقل</div>
+    <button class="btn-primary" onclick="goToPage2()">التالي — بيانات التوصيل ←</button>
+  </div>
+
+  <div class="total-bar">
+    <div><div class="total-label">المجموع الكلي</div><div class="total-amount" id="totalDisplay">٠ <span class="total-currency">دينار عراقي</span></div></div>
+    <div style="font-size:0.8rem;color:#a0aec0;text-align:left;">عدد البكجات<br><strong id="pkgCount" style="color:#0f3460;font-size:1rem;">٠</strong></div>
+  </div>
+</div>
+
+<!-- PAGE 2: DELIVERY -->
+<div class="page" id="page2">
+  <div class="container">
+    <div class="section-title"><span>📍</span> بيانات التوصيل</div>
+
+    <div class="form-group">
+      <label class="form-label">المحافظة <span class="req">*</span></label>
+      <select class="form-select" id="province" onchange="clearErr('province')">
+        <option value="">— اختر المحافظة —</option>
+        <option>بغداد</option><option>البصرة</option><option>نينوى</option>
+        <option>أربيل</option><option>النجف</option><option>كربلاء</option>
+        <option>الأنبار</option><option>ديالى</option><option>صلاح الدين</option>
+        <option>كركوك</option><option>واسط</option><option>بابل</option>
+        <option>القادسية</option><option>ذي قار</option><option>المثنى</option>
+        <option>ميسان</option><option>دهوك</option><option>السليمانية</option>
+        <option>حلبجة</option>
+      </select>
+      <div class="form-error" id="err-province">يرجى اختيار المحافظة</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">القضاء / الناحية <span class="req">*</span></label>
+      <input class="form-input" id="district" type="text" placeholder="مثال: الكرخ، المنصور..." oninput="clearErr('district')">
+      <div class="form-error" id="err-district">يرجى إدخال القضاء أو الناحية</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">رقم الهاتف <span class="req">*</span></label>
+      <input class="form-input" id="phone" type="tel" placeholder="07xxxxxxxxx" oninput="clearErr('phone')">
+      <div class="form-error" id="err-phone">أدخل رقم هاتف صحيح (11 رقم)</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">رقم إضافي (اختياري)</label>
+      <input class="form-input" id="phone2" type="tel" placeholder="07xxxxxxxxx">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">أقرب نقطة دالّة (اختياري)</label>
+      <input class="form-input" id="landmark" type="text" placeholder="مثال: بجانب مدرسة الرشيد...">
+    </div>
+
+    <div class="info-box">ℹ️ سيتواصل معك أحد موظفي مطبعة الكوثر لتأكيد الطلب وتحديد موعد التوصيل.</div>
+
+    <button class="btn-primary" onclick="goToPage3()">مراجعة الطلب ←</button>
+    <button class="btn-secondary" onclick="goPage(1)">← رجوع</button>
+  </div>
+</div>
+
+<!-- PAGE 3: REVIEW -->
+<div class="page" id="page3">
+  <div class="container">
+    <div class="section-title"><span>✅</span> مراجعة الطلب</div>
+
+    <div class="review-card">
+      <div class="review-card-title">📚 الصفوف المطلوبة</div>
+      <div id="reviewGrades"></div>
+      <div class="review-total">
+        <div class="review-total-label">المجموع الكلي</div>
+        <div class="review-total-amount" id="reviewTotal"></div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-card-title">📍 بيانات التوصيل</div>
+      <div class="review-row"><span class="review-row-label">المحافظة</span><span class="review-row-value" id="rv-province"></span></div>
+      <div class="review-row"><span class="review-row-label">القضاء / الناحية</span><span class="review-row-value" id="rv-district"></span></div>
+      <div class="review-row" id="rv-landmark-row"><span class="review-row-label">نقطة دالّة</span><span class="review-row-value" id="rv-landmark"></span></div>
+      <div class="review-row"><span class="review-row-label">رقم الهاتف</span><span class="review-row-value" id="rv-phone"></span></div>
+      <div class="review-row" id="rv-phone2-row"><span class="review-row-label">رقم إضافي</span><span class="review-row-value" id="rv-phone2"></span></div>
+    </div>
+
+    <div class="info-box">🚚 التوصيل مجاني لجميع أنحاء العراق. سيتم الدفع عند الاستلام.</div>
+
+    <button class="btn-whatsapp" onclick="sendWhatsApp()">
+📨 إرسال الطلب
+    </button>
+    <button class="btn-secondary" onclick="goPage(2)">← تعديل البيانات</button>
+  </div>
+</div>
+
+<script>
+const grades = [
+  { id:'g1',  name:'الأول الابتدائي',   price:20000 },
+  { id:'g2',  name:'الثاني الابتدائي',  price:20000 },
+  { id:'g3',  name:'الثالث الابتدائي',  price:20000 },
+  { id:'g4',  name:'الرابع الابتدائي',  price:20000 },
+  { id:'g5',  name:'الخامس الابتدائي', price:20000 },
+  { id:'g6',  name:'السادس الابتدائي', price:20000 },
+  { id:'g7',  name:'الأول المتوسط',     price:24000 },
+  { id:'g8',  name:'الثاني المتوسط',    price:24000 },
+  { id:'g9',  name:'الثالث المتوسط',    price:24000 },
+  { id:'g10', name:'الرابع الأدبي',     price:28000 },
+  { id:'g11', name:'الرابع العلمي',     price:28000 },
+  { id:'g12', name:'الخامس الأدبي',    price:28000 },
+  { id:'g13', name:'الخامس العلمي',    price:28000 },
+  { id:'g14', name:'السادس الأدبي',    price:28000 },
+  { id:'g15', name:'السادس العلمي',    price:28000 },
+];
+
+function changeQty(id, delta) {
+  const el = document.getElementById(id);
+  let val = parseInt(el.textContent) + delta;
+  if (val < 0) val = 0;
+  if (val > 20) val = 20;
+  el.textContent = val;
+  updateTotal();
+}
+
+function toArabicNum(n) {
+  return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function updateTotal() {
+  let total = 0, pkgs = 0;
+  grades.forEach(g => {
+    const qty = parseInt(document.getElementById(g.id).textContent);
+    total += qty * g.price;
+    pkgs += qty;
+  });
+  document.getElementById('totalDisplay').innerHTML = toArabicNum(total.toLocaleString('en')) + ' <span class="total-currency">دينار عراقي</span>';
+  document.getElementById('pkgCount').textContent = toArabicNum(pkgs);
+}
+
+function goPage(n) {
+  document.querySelectorAll('.page').forEach((p,i) => {
+    p.classList.toggle('active', i === n-1);
+  });
+  document.querySelectorAll('.step').forEach((s,i) => {
+    s.classList.remove('active','done');
+    if (i < n-1) s.classList.add('done');
+    if (i === n-1) s.classList.add('active');
+  });
+  window.scrollTo(0,0);
+}
+
+function goToPage2() {
+  let total = 0;
+  grades.forEach(g => total += parseInt(document.getElementById(g.id).textContent));
+  if (total === 0) {
+    document.getElementById('alert1').classList.add('show');
+    return;
+  }
+  document.getElementById('alert1').classList.remove('show');
+  fbq('track', 'InitiateCheckout');
+  goPage(2);
+}
+
+function clearErr(id) {
+  document.getElementById(id).classList.remove('error');
+  document.getElementById('err-' + id).classList.remove('show');
+}
+
+function goToPage3() {
+  let valid = true;
+  const province = document.getElementById('province').value;
+  const district = document.getElementById('district').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+
+  if (!province) {
+    document.getElementById('province').classList.add('error');
+    document.getElementById('err-province').classList.add('show');
+    valid = false;
+  }
+  if (!district) {
+    document.getElementById('district').classList.add('error');
+    document.getElementById('err-district').classList.add('show');
+    valid = false;
+  }
+  if (!/^07\d{9}$/.test(phone)) {
+    document.getElementById('phone').classList.add('error');
+    document.getElementById('err-phone').classList.add('show');
+    valid = false;
+  }
+  if (!valid) return;
+
+  // Fill review
+  let gradesHtml = '';
+  let totalPkg = 0, totalPrice = 0;
+  grades.forEach(g => {
+    const qty = parseInt(document.getElementById(g.id).textContent);
+    if (qty > 0) {
+      gradesHtml += `<div class="review-row">
+        <span class="review-row-label">${g.name} × ${toArabicNum(qty)}</span>
+        <span class="review-row-value">${toArabicNum((qty * g.price).toLocaleString('en'))} د.ع</span>
+      </div>`;
+      totalPkg += qty;
+      totalPrice += qty * g.price;
+    }
+  });
+  document.getElementById('reviewGrades').innerHTML = gradesHtml;
+  document.getElementById('reviewTotal').textContent = toArabicNum(totalPrice.toLocaleString('en')) + ' دينار عراقي';
+
+  document.getElementById('rv-province').textContent = province;
+  document.getElementById('rv-district').textContent = district;
+  document.getElementById('rv-phone').textContent = phone;
+
+  const phone2 = document.getElementById('phone2').value.trim();
+  const landmark = document.getElementById('landmark').value.trim();
+  document.getElementById('rv-phone2-row').style.display = phone2 ? '' : 'none';
+  document.getElementById('rv-phone2').textContent = phone2;
+  document.getElementById('rv-landmark-row').style.display = landmark ? '' : 'none';
+  document.getElementById('rv-landmark').textContent = landmark;
+
+  fbq('track', 'InitiateCheckout');
+
+  goPage(3);
+}
+
+async function sendWhatsApp() {
+  let msg = '🛒 طلب جديد - مطبعة الكوثر\n\n';
+  msg += '📋 الصفوف المطلوبة:\n';
+  let total = 0;
+  grades.forEach(g => {
+    const qty = parseInt(document.getElementById(g.id).textContent);
+    if (qty > 0) {
+      msg += `• ${g.name} × ${qty} بكج = ${(qty * g.price).toLocaleString('en')} دينار\n`;
+      total += qty * g.price;
+    }
+  });
+  msg += `\n💰 المجموع: ${total.toLocaleString('en')} دينار عراقي\n\n`;
+  msg += '📍 بيانات التوصيل:\n';
+  msg += `• المحافظة: ${document.getElementById('province').value}\n`;
+  msg += `• القضاء او الناحية: ${document.getElementById('district').value.trim()}\n`;
+  const lm = document.getElementById('landmark').value.trim();
+  if (lm) msg += `• نقطة دالّة: ${lm}\n`;
+  msg += `• رقم الهاتف: ${document.getElementById('phone').value.trim()}\n`;
+  const p2 = document.getElementById('phone2').value.trim();
+  if (p2) msg += `• رقم هاتف اخر: ${p2}\n`;
+  msg += '\n🚚 التوصيل مجاني — الدفع عند الاستلام';
+
+  const token = '8729384662:AAEK0DRQXRou0Zs_re0V67mBqfrF0Sq1wuU';
+  const chatId = '1277064224';
+
+  // Show loading
+  const btn = document.querySelector('.btn-whatsapp');
+  btn.textContent = '⏳ جاري الإرسال...';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text: msg })
+    });
+    const data = await response.json();
+    if (data.ok) {
+      fbq('track', 'Purchase', { currency: 'IQD', value: total });
+      btn.textContent = '✅ تم إرسال طلبك بنجاح!';
+      btn.style.background = 'linear-gradient(135deg, #38a169, #276749)';
+      setTimeout(() => {
+        // Reset form
+        grades.forEach(g => { document.getElementById(g.id).textContent = '0'; });
+        updateTotal();
+        goPage(1);
+        btn.textContent = '📨 إرسال الطلب';
+        btn.disabled = false;
+        btn.style.background = '';
+      }, 3000);
+    } else {
+      throw new Error('failed');
+    }
+  } catch(e) {
+    btn.textContent = '❌ حدث خطأ، حاول مرة أخرى';
+    btn.disabled = false;
+    setTimeout(() => { btn.textContent = '📨 إرسال الطلب'; }, 3000);
+  }
+}
+</script>
+</body>
+</html>
