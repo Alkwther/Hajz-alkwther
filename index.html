@@ -168,7 +168,7 @@ body { font-family: 'Cairo', sans-serif; background: #f5f7fa; color: #1a1a2e; mi
       <div class="review-row" id="rv-phone2-row"><span class="review-row-label">رقم إضافي</span><span class="review-row-value" id="rv-phone2"></span></div>
     </div>
     <div class="info-box">🚚 التوصيل مجاني لجميع أنحاء العراق. سيتم الدفع عند الاستلام.</div>
-    <button class="btn-whatsapp" onclick="sendOrder()">📲 إرسال الطلب عبر واتساب</button>
+    <a id="waLink" href="#" class="btn-whatsapp" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;" onclick="return prepareOrder()">📲 إرسال الطلب عبر واتساب</a>
     <button class="btn-secondary" onclick="goPage(2)">تعديل البيانات</button>
   </div>
 </div>
@@ -274,7 +274,7 @@ function goToPage3() {
   goPage(3);
 }
 
-function sendOrder() {
+function prepareOrder() {
   var msg = 'مطبعة الكوثر\n\n';
   msg += 'الصفوف المطلوبة:\n';
   var total = 0;
@@ -295,7 +295,8 @@ function sendOrder() {
   var lm = document.getElementById('landmark').value.trim();
   if (lm) msg += '- نقطة دالة: ' + lm + '\n';
   msg += '\nالتوصيل مجاني - الدفع عند الاستلام';
-  window.location.href = 'https://wa.me/9647708170195?text=' + encodeURIComponent(msg);
+  document.getElementById('waLink').href = 'https://wa.me/9647708170195?text=' + encodeURIComponent(msg);
+  return true;
 }
 </script>
 </body>
